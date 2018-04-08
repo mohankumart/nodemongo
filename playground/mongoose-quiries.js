@@ -2,6 +2,7 @@ const {ObjectID} = require('mongodb')
 
 const {mongoose} = require('./../server/db/mongoose')
 const {Todo} = require('./../server/models/todo')
+const {User} = require('./../server/models/user')
 
 var id = '5aca67382540b74a5e49d799'
 
@@ -30,4 +31,13 @@ Todo.findById(id).then((todo)=>{
     console.log('single todo', todo)
 }).catch((e)=>{
     console.log(e)
+})
+
+User.findById('5aca67382540b74a5e49d799').then((user)=>{
+    if(!user){
+        return console.log('Unable to find user')
+    }
+    console.log(user)
+}).catch((err)=>{
+    console.log(err)
 })
