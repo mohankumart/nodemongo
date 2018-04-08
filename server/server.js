@@ -12,6 +12,10 @@ const port = process.env.PORT || 3000
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+app.get('/',(req, res)=>{
+    res.send('hello world!!!')
+})
+
 app.post('/todos',(req, res)=>{
     var todo = new Todo({
         text: req.body.text
