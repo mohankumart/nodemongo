@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const {ObjectID} = require('mongodb')
 
 var {mongoose} = require('./db/mongoose')
 var {Todo} = require('./models/todo')
@@ -31,7 +32,21 @@ app.get('/todos', (req, res) => {
 })
 
 app.get('/todos/:id', (req, res)=>{
+    var id = req.params.id
 
+    if(!ObjectID.isValid(id)){
+        return res.status(404).send('not valid object id')
+    }
+
+    Todo.findById(id).then((todo)=>{
+        if(!todo){
+            res.status(404).send('doc not found')
+        }else{
+            res.send({todo})
+        }
+    },(err)=>{
+        res.status(400).send(err)
+    })
 })
 
 
