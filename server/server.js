@@ -54,6 +54,24 @@ app.get('/todos/:id', (req, res)=>{
     })
 })
 
+app.delete('/todos/:id', (req, res)=>{
+    var id = req.params.id
+
+    if(!ObjectID.isValid(id)){
+        return res.status(404).send('not valid object id')
+    }
+
+    Todo.findByIdAndRemove(id).then((todo)=>{
+        if(!todo){
+            res.status(404).send('doc not found')
+        }else{
+            res.send({todo})
+        }
+    },(err)=>{
+        res.status(400).send(err)
+    })
+
+})
 
 app.listen(port,()=>{
     console.log(`Started server on port ${port}`)
