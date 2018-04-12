@@ -1,5 +1,3 @@
-import { Promise } from 'mongoose';
-
 const {ObjectID} = require('mongodb')
 const jwt = require('jsonwebtoken')
 
@@ -13,7 +11,7 @@ const users = [{
     email: 'mohan@fireeye.com',
     password: 'helloworld',
     tokens: [{
-        access: auth,
+        access: 'auth',
         token: jwt.sign({_id:userOneId, access:'auth'}, 'abe123').toString()
     }]
 }, {

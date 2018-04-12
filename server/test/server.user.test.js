@@ -12,10 +12,10 @@ describe('GET /users/me',()=>{
         console.log(users[0].tokens[0].token)
         request(app)
             .get('/users/me/')
-            .set('x-auth',users[0].tokens[0].token)
+            .set('x-auth','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWNlZGY1MzkwODYyMjJkMzA2MzU4NmIiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTIzNTA3MDI3fQ.p-qLAVusFPbietley0HOmxahF3-GK7JzYf05i15mfKg')
             .expect(200)
             .expect((res)=>{
-                expect(res.body.emai).toBe(users[0].email())
+                expect(res.body.email).toBe('hello@test.com')
             })
             .end(done)
     })  
@@ -25,3 +25,18 @@ describe('GET /users/me',()=>{
     })
 })
 
+describe('POST /users',() => {
+    it('should create a user', (done)=>{
+        var email = 'hewelawlo@test.com'
+        var password = '12as3mnb'
+
+        request(app)
+            .post('/users')
+            .send({email, password})
+            .expect(200)
+            .expect((res)=>{
+                console.log(res.body.email)
+            })
+            .end(done)
+    })
+})
