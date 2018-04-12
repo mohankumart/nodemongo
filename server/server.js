@@ -112,7 +112,6 @@ app.patch('/todos/:id',(req, res) => {
 })
 
 app.post('/users',(req, res)=>{
-    debugger
     var body = _.pick(req.body, ['email', 'password'])
     var user = new User(body)
     user.save().then(()=>{
@@ -127,6 +126,16 @@ app.post('/users',(req, res)=>{
 
 app.get('/users/me', authenticate, (req, res)=>{
     res.send(req.user)
+})
+
+app.post('/users/login',(req, res)=>{
+    debugger
+    var body = _.pick(req.body, ['email', 'password'])
+    User.findByCredentials(body.email, body.password).then((user)=>{
+        res.send(user)
+    }).catch((e)=>{
+        res.send(400).send()
+    })
 })
 
 app.listen(process.env.PORT,()=>{
